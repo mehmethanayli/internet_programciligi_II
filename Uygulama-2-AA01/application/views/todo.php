@@ -19,33 +19,56 @@
 
 <body>
 
-    <div class="row">
-        <table class="table table-bordered table-hover table-striped">
+    <h3 class="text-center">Todo List Uygulaması</h3>
+    <br>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <form action="<?php echo base_url("todo/insert"); ?>" method="POST">
+                    <div class="row">
+                        <div class="col-md-11">
+                            <input type="text" name="description" class="form-control" placeholder="Yapılacak görevi buraya yazınız.">
+                        </div>
+                        <div class="col-md-1">
+                            <button class="btn btn-info"> Ekle </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <br>
+        <hr>
 
-            <thead>
-                <tr>
-                    <td>Yapılacaklar</td>
-                    <td>Durum</td>
-                    <td>Oluşturulma Tarihi</td>
-                    <td>İşlem</td>
-                </tr>
-            </thead>
+        <div class="row">
 
-            <tbody>
+            <table class="table table-bordered table-hover table-striped">
 
-                <?php foreach ($todos as $todo) { ?>
+                <thead>
                     <tr>
-                        <td><?php echo $todo->description; ?></td>
-                        <td><?php echo ($todo->complated_at == 1) ? "Tamamlandı" : "Beklemede"; ?></td>
-                        <td> <?php echo $todo->created_at; ?> </td>
-                        <td><a href="" class=" btn btn-danger"> Sil </td>
+                        <td>Yapılacaklar</td>
+                        <td>Durum</td>
+                        <td>Oluşturulma Tarihi</td>
+                        <td>İşlem</td>
                     </tr>
+                </thead>
 
-                <?php } ?>
-            </tbody>
+                <tbody>
 
-        </table>
+                    <?php foreach ($todos as $todo) { ?>
+                        <tr>
+                            <td><?php echo $todo->description; ?></td>
+                            <td><?php echo ($todo->complated_at == 1) ? "Tamamlandı" : "Beklemede"; ?></td>
+                            <td> <?php echo $todo->created_at; ?> </td>
+                            <td><a href="<?php echo base_url("todo/delete/$todo->id"); ?>" class=" btn btn-danger"> Sil </td>
+                        </tr>
 
+                    <?php } ?>
+
+                </tbody>
+
+            </table>
+
+        </div>
     </div>
 
 
