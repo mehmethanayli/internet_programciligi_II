@@ -21,20 +21,47 @@ class Todo extends CI_Controller
     public function insert()
     {
 
-        /* Formdan gelen veri */
-        $description = $this->input->post("description");
+        $this->load->library("form_validation");
 
-        /* Veri tabanı için hazırlanan veri */
-        $data =    array(
-            "description" => $description,
-            "complated_at" => 0,
-            "created_at"    => date("Y-m-d H:i:s")
+        /* Kurallar belirlenir. */
+        $this->form_validation->set_rules("description", "Açıklama Alanı", "required|trim|is_unique[todos.description]");
+
+        $this->form_validation->set_message(
+            array(
+                "required" => "{field} doldurulmalıdır.",
+                "is_unique" => "<b>{field}</b> veri tabanında daha önceden kayıtlı.",
+            )
         );
 
-        $this->load->model("todo_model");
-        $insert = $this->todo_model->insert($data);
-        if ($insert) {
-            redirect(base_url());
+        $validation = $this->form_validation->run();
+
+        if ($validation) {
+            /* Formdan gelen veri */
+            $description = $this->input->post("description");
+            $priority = $this->input->post("priority");
+
+            /* Veri tabanı için hazırlanan veri */
+            $data =    array(
+                "description"   => $description,
+                "priority"      => $priority,
+                "created_at"    => date("Y-m-d H:i:s")
+            );
+
+            $this->load->model("todo_model");
+            $insert = $this->todo_model->insert($data);
+            if ($insert) {
+                redirect(base_url());
+            }
+        } else {
+
+            $this->load->model("todo_model");
+
+            $items = $this->todo_model->getAll();
+
+            $viewData = new stdClass();
+            $viewData->todos = $items;
+            $viewData->formError = TRUE;
+            $this->load->view("todo", $viewData);
         }
     }
 

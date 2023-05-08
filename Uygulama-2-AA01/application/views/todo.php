@@ -26,10 +26,25 @@
             <div class="col-md-12">
                 <form action="<?php echo base_url("todo/insert"); ?>" method="POST">
                     <div class="row">
-                        <div class="col-md-11">
-                            <input type="text" name="description" class="form-control" placeholder="Yapılacak görevi buraya yazınız.">
+                        <div class="col-md-8">
+                            <input type="text" name="description" class="form-control" 
+                            value="<?php echo isset($formError) ? set_value("description") : NULL; ?>" 
+                            placeholder="Yapılacak görevi buraya yazınız.">
+                            <?php
+                            if (isset($formError)) {
+                                echo form_error("description");
+                            }
+
+                            ?>
                         </div>
-                        <div class="col-md-1">
+                        <div class="col-md-2">
+                            <select class="form-control" name="priority" id="" required>
+                                <option value="">Seçim Yapınız</option>
+                                <option value="0">Normal</option>
+                                <option value="1">Acil</option>
+                            </select>
+                        </div>
+                        <div class="col-md-2">
                             <button class="btn btn-info"> Ekle </button>
                         </div>
                     </div>
@@ -46,6 +61,7 @@
                 <thead>
                     <tr>
                         <td>Yapılacaklar</td>
+                        <td>Öncelik</td>
                         <td>Durum</td>
                         <td>Oluşturulma Tarihi</td>
                         <td>İşlem</td>
@@ -57,7 +73,8 @@
                     <?php foreach ($todos as $todo) { ?>
                         <tr>
                             <td><?php echo $todo->description; ?></td>
-                            <td><?php echo ($todo->complated_at == 1) ? "Tamamlandı" : "Beklemede"; ?></td>
+                            <td><?php echo ($todo->priority == 1) ? "Acil" : "Normal"; ?></td>
+                            <td><?php echo ($todo->priority == 1) ? "Yapıldı" : "Yapılmadı"; ?></td>
                             <td> <?php echo $todo->created_at; ?> </td>
                             <td><a href="<?php echo base_url("todo/delete/$todo->id"); ?>" class=" btn btn-danger"> Sil </td>
                         </tr>
