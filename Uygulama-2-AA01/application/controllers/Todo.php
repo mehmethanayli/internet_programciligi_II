@@ -82,4 +82,17 @@ class Todo extends CI_Controller
         Bu işlem için gerekli veri tabanı değişikliğini yapınız.
     
     */
+
+
+    public function isComplateSetter($id)
+    {
+        $this->load->model("todo_model");
+        $complated = ($this->input->post("complated") == true) ? 1 : 0;
+        $this->todo_model->update(
+            $id,
+            array(
+                "is_active" => $complated
+            )
+        );
+    }
 }

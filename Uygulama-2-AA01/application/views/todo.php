@@ -74,11 +74,19 @@
                         <tr>
                             <td><?php echo $todo->description; ?></td>
                             <td><?php echo ($todo->priority == 1) ? "Acil" : "Normal"; ?></td>
-                            <td><?php echo ($todo->priority == 1) ? "Yapıldı" : "Yapılmadı"; ?></td>
+                            <td>
+                                <input 
+                                type="checkbox" 
+                                class="form-control js-switch"
+                                data-url="<?php echo base_url("todo/isComplateSetter/$todo->id")?>"
+                                <?php echo ($todo->is_active == 1) ? "checked" : ""; ?>>
+                            </td>
                             <td> <?php echo $todo->created_at; ?> </td>
                             <td><a href="<?php echo base_url("todo/delete/$todo->id"); ?>" class=" btn btn-danger"> Sil </td>
                         </tr>
 
+
+                       
                     <?php } ?>
 
                 </tbody>

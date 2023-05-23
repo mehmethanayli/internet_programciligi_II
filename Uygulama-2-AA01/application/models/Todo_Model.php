@@ -21,4 +21,9 @@ class Todo_Model extends CI_Model
     {
         return $this->db->where("id", $id)->delete("todos");
     }
+
+    public function update($id, $data = array())
+    {
+        return $this->db->where("id" , $id)->update("todos", $data);
+    }
 }

@@ -22,11 +22,11 @@ $("body").on("change",".js-switch",function(){
     //1:Url
     //2:Veri
     //3:Geri Dönüşünde Yapılacak İşlem
-    $.post($url,{complated:$complated}, function(){
+     $.post($url,{complated:$complated}, function(){
 
         //alert(response);
 
-    })
+    }) 
 
 
 })
